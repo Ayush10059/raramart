@@ -1,25 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:raramart/screens/profile/profilePage.dart';
+import 'package:raramart/router.dart';
+import 'package:raramart/screens/profile/profile.dart';
 
 class MainDrawer extends StatelessWidget {
-  final padding = EdgeInsets.symmetric(horizontal: 20);
-
   @override
   Widget build(BuildContext context) {
     final headerLogo = 'assets/images/raramart-logo.png';
-    return Drawer(
-      child: Material(
+    return Material(
+      child: Drawer(
         child: ListView(
-          padding: padding,
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           children: [
             Container(
               width: double.infinity,
-              padding: padding.add(EdgeInsets.fromLTRB(0, 30, 70, 10)),
+              padding: const EdgeInsets.fromLTRB(0, 30, 70, 10),
               child: Container(
                 width: 100.0,
                 height: 40.0,
                 decoration: BoxDecoration(
-                    image: DecorationImage(image: AssetImage(headerLogo))),
+                  image: DecorationImage(
+                    image: AssetImage(headerLogo),
+                  ),
+                ),
               ),
             ),
             Divider(
@@ -29,21 +31,24 @@ class MainDrawer extends StatelessWidget {
               height: 10,
             ),
             buildMenuItem(
-                text: 'Profile',
-                icon: Icons.person,
-                onClicked: () => selectedItem(context, 0)),
+              text: 'Profile',
+              icon: Icons.person,
+              onClicked: () => selectedItem(context, 0),
+            ),
             const SizedBox(
               height: 10,
             ),
             buildMenuItem(
-                text: 'Settings',
-                icon: Icons.settings,
-                onClicked: () => selectedItem(context, 1)),
+              text: 'Settings',
+              icon: Icons.settings,
+              onClicked: () => selectedItem(context, 1),
+            ),
             const SizedBox(height: 10),
             buildMenuItem(
-                text: 'Contact Us',
-                icon: Icons.phone,
-                onClicked: () => selectedItem(context, 2)),
+              text: 'Contact Us',
+              icon: Icons.phone,
+              onClicked: () => selectedItem(context, 2),
+            ),
             SizedBox(
               height: 10,
             ),
@@ -54,9 +59,10 @@ class MainDrawer extends StatelessWidget {
               height: 10,
             ),
             buildMenuItem(
-                text: 'Log Out',
-                icon: Icons.logout_outlined,
-                onClicked: () => selectedItem(context, 3)),
+              text: 'Log Out',
+              icon: Icons.logout_outlined,
+              onClicked: () => selectedItem(context, 3),
+            ),
           ],
         ),
       ),
@@ -84,9 +90,22 @@ class MainDrawer extends StatelessWidget {
     Navigator.of(context).pop();
     switch (index) {
       case 0:
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => ProfilePage(),
-        ));
+        {
+          Navigator.pushNamed(
+            context,
+            profile,
+          );
+          break;
+        }
+
+      case 3:
+        {
+          Navigator.pushNamed(
+            context,
+            login,
+          );
+          break;
+        }
     }
   }
 }
