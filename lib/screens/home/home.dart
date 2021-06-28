@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:raramart/appbar.dart';
+import 'package:raramart/details.dart';
 import 'package:raramart/screens/home/components/homebody.dart';
 import 'package:raramart/utils/size_config.dart';
 // import 'package:raramart/drawer.dart';
@@ -71,6 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         children: [
           HomeBody(),
+          DetailsScreen(),
           new Center(
             child: new Column(
               mainAxisAlignment: MainAxisAlignment.center,
