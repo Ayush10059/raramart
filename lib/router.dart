@@ -19,7 +19,7 @@ const String registerSuccess = '/registerSuccess ';
 const String forgotPassword = '/forgotPassword ';
 
 const String home = '/home ';
-const String profile = '/home ';
+const String profile = '/profile ';
 
 class Routing {
   static Route<dynamic> generateRoute(RouteSettings screen) {
