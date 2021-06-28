@@ -5,12 +5,11 @@ PreferredSizeWidget buildAppBar(
 ) {
   return AppBar(
     backgroundColor: Colors.white,
-    title: Center(
-      child: Container(
-        child: Image.asset("assets/images/raramart-logo.png"),
-      ),
+    elevation: 0.0,
+    title: Container(
+      child: Image.asset("assets/images/raramart-logo.png"),
     ),
+    centerTitle: true,
     iconTheme: IconThemeData(color: Colors.grey),
-    elevation: 0,
   );
 }
