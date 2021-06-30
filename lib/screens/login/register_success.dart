@@ -53,7 +53,7 @@ class _RegisterSuccessScreenState extends State<RegisterSuccessScreen> {
               maxLines: 3,
             ),
             Spacer(flex: 9),
-            kTextButton(
+            kButton(
               text: "Continue",
               bgColor: kBlack,
               onPressed: () {},

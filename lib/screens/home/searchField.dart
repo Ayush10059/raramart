@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:raramart/utils/constants.dart';
 
 class SearchField extends StatefulWidget {
   const SearchField({Key? key}) : super(key: key);
@@ -19,7 +20,7 @@ class _SearchFieldState extends State<SearchField> {
             height: 45,
             decoration: BoxDecoration(
                 border: Border.all(color: Color(0xFF979797).withOpacity(0.5)),
-                color: Colors.white,
+                color: kWhite,
                 borderRadius: BorderRadius.circular(20)),
             child: TextField(
               decoration: InputDecoration(

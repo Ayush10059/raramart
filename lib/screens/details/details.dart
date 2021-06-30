@@ -1,18 +1,50 @@
 import 'package:flutter/material.dart';
-import 'package:raramart/utils/helper.dart';
 
 import 'package:share/share.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 import 'package:raramart/utils/constants.dart';
+import 'package:raramart/utils/helper.dart';
 import 'package:raramart/utils/storage.dart';
 import 'package:raramart/utils/progressHUD.dart';
 import 'package:raramart/utils/custom_stepper.dart';
 
+import 'package:raramart/widgets/appbar.dart';
+
 class DetailsScreen extends StatefulWidget {
+  final String product;
+  final String price;
+
+  const DetailsScreen({
+    Key? key,
+    required this.product,
+    required this.price,
+  }) : super(key: key);
+
   @override
   _DetailsScreenState createState() => _DetailsScreenState();
 }
+
+List<Map<String, dynamic>> splashData = [
+  {
+    "key": 0,
+    "title": "Best Deals",
+    "text": "We help people conect with store around United State of America",
+    "image": "assets/images/onboarding.jpg"
+  },
+  {
+    "key": 1,
+    "title": "Get rewards as you eat",
+    "text": "We help people conect with store around United State of America",
+    "image": "assets/images/onboarding.jpg"
+  },
+  {
+    "key": 2,
+    "title": "Share your reviews",
+    "text": "We help people conect with store around United State of America",
+    "image": "assets/images/onboarding.jpg"
+  },
+];
 
 class _DetailsScreenState extends State<DetailsScreen> {
   final SecureStorage secureStorage = SecureStorage();
@@ -45,27 +77,25 @@ class _DetailsScreenState extends State<DetailsScreen> {
     return ProgressHUD(
       inAsyncCall: _apiCallProcess,
       child: Scaffold(
+        appBar: buildAppBar(context),
         body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _productImages(context),
               Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 5.0,
-                  horizontal: 10.0,
-                ),
+                padding: kPadding,
                 child: Row(
                   children: [
                     kText(
-                        text: "Rs. 30,000 /-",
+                        text: widget.price,
                         fontSize: 18,
                         fontWeight: FontWeight.w600),
                     Spacer(),
                     IconButton(
                       onPressed: () {},
                       icon: Icon(
-                        Icons.search,
+                        Icons.favorite_border,
                         color: kDarkGrey,
                       ),
                     ),
@@ -83,23 +113,16 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 5.0,
-                  horizontal: 10.0,
-                ),
+                padding: kPadding,
                 child: kText(
-                  text:
-                      "Unlocked original Apple iPhone 7plus 5.5 inch RAM 128 GB 12.0 MP Camera 4G LTE",
+                  text: widget.product,
                   fontSize: 16,
                   maxLines: 3,
                   overflow: TextOverflow.visible,
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 5.0,
-                  horizontal: 10.0,
-                ),
+                padding: kPadding,
                 child: StarRating(
                   rating: _rating,
                   onRatingChanged: (rating) {
@@ -108,20 +131,14 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 5.0,
-                  horizontal: 10.0,
-                ),
+                padding: kPadding,
                 child: Divider(
                   height: 2.0,
                   thickness: 2.0,
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 5.0,
-                  horizontal: 10.0,
-                ),
+                padding: kPadding,
                 child: kText(
                   text: "Select Quantity",
                   fontSize: 16,
@@ -129,10 +146,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 5.0,
-                  horizontal: 10.0,
-                ),
+                padding: kPadding,
                 child: CustomStepper(
                   lowerLimit: 1,
                   upperLimit: 20,
@@ -142,6 +156,46 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     this._quantity = value;
                   },
                 ),
+              ),
+              // productDetailsScroll(
+              //   labelName: "You may also like",
+              //   productList: splashData[0],
+              // ),
+            ],
+          ),
+        ),
+        bottomSheet: Container(
+          padding: kPadding,
+          color: kWhite,
+          height: 50,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              kIconButton(
+                icon: Icons.home_outlined,
+                onPressed: () {},
+              ),
+              VerticalDivider(
+                thickness: 1.0,
+                width: 1.0,
+              ),
+              kIconButton(
+                icon: Icons.favorite_border_outlined,
+                onPressed: () {},
+              ),
+              kButton(
+                height: 50,
+                width: 100,
+                text: "Buy Now",
+                bgColor: kPrimaryColor,
+                onPressed: () {},
+              ),
+              kButton(
+                height: 50,
+                width: 100,
+                text: "Add to Cart",
+                bgColor: kYellow,
+                onPressed: () {},
               ),
             ],
           ),
@@ -247,7 +301,7 @@ class StarRating extends StatelessWidget {
     this.starCount = 5,
     this.rating = .0,
     required this.onRatingChanged,
-    this.color = Colors.yellow,
+    this.color = kYellow,
   });
 
   Widget buildStar(BuildContext context, int index) {
@@ -277,13 +331,4 @@ class StarRating extends StatelessWidget {
         children:
             new List.generate(starCount, (index) => buildStar(context, index)));
   }
-}
-
-Future<void> _showDialog(context, txt) async {
-  return showDialog<void>(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(title: Text(txt));
-    },
-  );
 }

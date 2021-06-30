@@ -204,7 +204,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   SizedBox(
                     height: getProportionateScreenHeight(20),
                   ),
-                  kTextButton(
+                  kButton(
                     text: "Register",
                     onPressed: () {
                       FocusScope.of(context).unfocus();

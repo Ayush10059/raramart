@@ -39,21 +39,22 @@ class _LoginScreenState extends State<LoginScreen> {
         key: _globalKey,
         child: Scaffold(
           backgroundColor: kWhite,
-          appBar: AppBar(
-            elevation: 0.0,
-            backgroundColor: kWhite,
-            leading: IconButton(
-              splashRadius: 25.0,
-              icon: Icon(
-                Icons.arrow_back_ios_rounded,
-                color: kBlack,
-              ),
-              onPressed: () {
-                FocusScope.of(context).unfocus();
-                Navigator.pop(context);
-              },
-            ),
-          ),
+          // TODO: change login
+          // appBar: AppBar(
+          //   elevation: 0.0,
+          //   backgroundColor: kWhite,
+          //   leading: IconButton(
+          //     splashRadius: 25.0,
+          //     icon: Icon(
+          //       Icons.arrow_back_ios_rounded,
+          //       color: kBlack,
+          //     ),
+          //     onPressed: () {
+          //       FocusScope.of(context).unfocus();
+          //       Navigator.pop(context);
+          //     },
+          //   ),
+          // ),
           body: SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.fromLTRB(
@@ -123,26 +124,44 @@ class _LoginScreenState extends State<LoginScreen> {
                           : Icons.visibility),
                     ),
                   ),
-                  TextButton(
-                    child: kText(
-                      text: "Forgot Password ?",
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                    ),
-                    onPressed: () => Navigator.pushNamed(
-                      context,
-                      forgotPassword,
-                    ),
+                  Row(
+                    children: [
+                      TextButton(
+                        child: kText(
+                          text: "Forgot Password ?",
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        onPressed: () => Navigator.pushNamed(
+                          context,
+                          forgotPassword,
+                        ),
+                      ),
+                      Spacer(),
+                      TextButton(
+                        child: kText(
+                          text: "Create account?",
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        onPressed: () {
+                          Navigator.pushNamed(
+                            context,
+                            register,
+                          );
+                        },
+                      ),
+                    ],
                   ),
-                  kTextButton(
+                  kButton(
                     text: "Login",
                     onPressed: () {
-                      if (kValidateAndSave(_globalKey)) {
-                        Navigator.pushNamed(
-                          context,
-                          home,
-                        );
-                      }
+                      //   if (kValidateAndSave(_globalKey)) {
+                      //     Navigator.pushNamed(
+                      //       context,
+                      //       home,
+                      //     );
+                      //   }
                     },
                   ),
                 ],

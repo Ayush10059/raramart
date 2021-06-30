@@ -1,28 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:raramart/screens/dashboard.dart';
+import 'package:raramart/screens/details/details.dart';
 
-import 'package:raramart/splash.dart';
+import 'package:raramart/screens/splash.dart';
 
 import 'package:raramart/screens/login/login.dart';
 import 'package:raramart/screens/login/register.dart';
 import 'package:raramart/screens/login/register_success.dart';
 import 'package:raramart/screens/login/forgot_password.dart';
 
-import 'package:raramart/screens/home/home.dart';
-
-import 'package:raramart/screens/profile/profile.dart';
-
 const String splash = '/';
+
+const String dashboard = '/dashboard';
 
 const String login = '/login ';
 const String register = '/register ';
 const String registerSuccess = '/registerSuccess ';
 const String forgotPassword = '/forgotPassword ';
 
-const String home = '/home ';
-const String profile = '/profile ';
+const String details = '/details';
 
 class Routing {
-  static Route<dynamic> generateRoute(RouteSettings screen) {
+  static Route<dynamic>? generateRoute(RouteSettings screen) {
     switch (screen.name) {
       case splash:
         return getRouteFor(
@@ -49,30 +48,27 @@ class Routing {
           ForgotPasswordScreen(),
         );
 
-      case home:
+      case dashboard:
         return getRouteFor(
-          HomeScreen(),
+          DashboardScreen(),
         );
 
-      case profile:
-        return getRouteFor(
-          ProfileScreen(),
-        );
-
-      // case details:
-      //   final args = screen.arguments;
-      //   if (args is Map) {
-      //     return getRouteFor(
-      //       DetailsScreen(
-      //         product: args['product'],
-      //         table: args['table'],
-      //       ),
-      //     );
-      //   } else
-      //     break;
+      case details:
+        final args = screen.arguments;
+        if (args is Map) {
+          return getRouteFor(
+            DetailsScreen(
+              product: args['product'],
+              price: args['price'],
+            ),
+          );
+        } else
+          break;
 
       default:
-        throw "Routing error";
+        return getRouteFor(
+          SplashScreen(),
+        );
     }
   }
 

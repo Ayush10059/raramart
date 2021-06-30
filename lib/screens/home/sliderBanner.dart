@@ -1,5 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:raramart/utils/constants.dart';
+import 'package:raramart/utils/helper.dart';
 
 final List<String> imgList = [
   'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
@@ -21,20 +23,24 @@ class _SliderBannerState extends State<SliderBanner> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: CarouselSlider(
-      options: CarouselOptions(
-        height: 150.0,
-        aspectRatio: 16 / 9,
-        autoPlay: true,
-        autoPlayAnimationDuration: Duration(milliseconds: 800),
-        viewportFraction: 1,
-      ),
-      items: imgList
-          .map((item) => Container(
+      child: CarouselSlider(
+        options: CarouselOptions(
+          height: 150.0,
+          aspectRatio: 16 / 9,
+          autoPlay: true,
+          autoPlayAnimationDuration: Duration(milliseconds: 800),
+          viewportFraction: 1,
+        ),
+        items: imgList
+            .map(
+              (item) => Container(
                 child: Center(
-                    child: Image.network(item, fit: BoxFit.cover, width: 1000)),
-              ))
-          .toList(),
-    ));
+                  child: Image.network(item, fit: BoxFit.cover, width: 1000),
+                ),
+              ),
+            )
+            .toList(),
+      ),
+    );
   }
 }

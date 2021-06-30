@@ -101,7 +101,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   SizedBox(
                     height: getProportionateScreenHeight(20),
                   ),
-                  kTextButton(
+                  kButton(
                     text: "Send Reset Email",
                     onPressed: () {
                       if (kValidateAndSave(_globalKey)) {}

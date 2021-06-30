@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:raramart/screens/home/home.dart';
+import 'package:raramart/router.dart';
+import 'package:raramart/screens/dashboard.dart';
+import 'package:raramart/screens/splash.dart';
 import 'package:raramart/utils/constants.dart';
 
 void main() {
@@ -27,7 +29,8 @@ class MyApp extends StatelessWidget {
           type: BottomNavigationBarType.fixed,
         ),
       ),
-      home: HomeScreen(),
+      onGenerateRoute: Routing.generateRoute,
+      home: SplashScreen(),
     );
   }
 }

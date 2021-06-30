@@ -29,7 +29,7 @@ Text kText({
 }
 
 TextStyle kTextStyle({
-  String fontFamily = 'Roboto',
+  String fontFamily = 'OpenSans',
   Color textColor = kBlack,
   double fontSize = 14,
   FontWeight fontWeight = FontWeight.normal,
@@ -89,39 +89,57 @@ InputDecoration kFieldDecoration(
     enabledBorder: OutlineInputBorder(
       borderSide: BorderSide(
         color: kLightGrey,
-        width: 2.0,
+        width: 1.0,
       ),
     ),
     focusedBorder: OutlineInputBorder(
       borderSide: BorderSide(
         color: kPrimaryColor,
-        width: 2.0,
+        width: 1.0,
       ),
     ),
     focusedErrorBorder: OutlineInputBorder(
       borderSide: BorderSide(
         color: kPrimaryColor,
-        width: 2.0,
+        width: 1.0,
       ),
     ),
     errorBorder: OutlineInputBorder(
       borderSide: BorderSide(
         color: kPrimaryColor,
-        width: 2.0,
+        width: 1.0,
       ),
     ),
   );
 }
 
-Container kTextButton({
+BoxDecoration kBoxDecoration({
+  Color color = kWhite,
+  double borderRadius = 4.0,
+  BoxShape shape = BoxShape.rectangle,
+  DecorationImage? image,
+}) {
+  return BoxDecoration(
+    color: color,
+    borderRadius: (shape == BoxShape.rectangle)
+        ? BorderRadius.circular(borderRadius)
+        : null,
+    shape: shape,
+    image: image,
+  );
+}
+
+Container kButton({
   required String text,
   required Function onPressed,
+  double height = 60,
+  double width = 375,
   Color textColor = kWhite,
   Color bgColor = kPrimaryColor,
 }) {
   return Container(
-    height: getProportionateScreenHeight(50),
-    width: getProportionateScreenWidth(375),
+    height: getProportionateScreenHeight(height),
+    width: getProportionateScreenWidth(width),
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(4.0),
       color: bgColor,
@@ -147,6 +165,48 @@ Container kTextButton({
   );
 }
 
+Container kTextButton({
+  required String text,
+  required Function onPressed,
+}) {
+  return Container(
+    height: 30,
+    child: TextButton(
+      style: TextButton.styleFrom(
+        visualDensity: VisualDensity.compact,
+        padding: EdgeInsets.all(0.0),
+      ),
+      onPressed: () {
+        return onPressed();
+      },
+      child: kText(
+        text: text,
+        fontSize: 12,
+        fontWeight: FontWeight.w600,
+      ),
+    ),
+  );
+}
+
+Container kIconButton({
+  required IconData icon,
+  required Function onPressed,
+  double size = 40,
+}) {
+  return Container(
+    width: size,
+    child: IconButton(
+      splashRadius: size,
+      visualDensity: VisualDensity.compact,
+      padding: EdgeInsets.all(0.0),
+      onPressed: () {
+        return onPressed();
+      },
+      icon: Icon(icon),
+    ),
+  );
+}
+
 bool kValidateAndSave(GlobalKey<FormState> globalKey) {
   final form = globalKey.currentState;
   if (form != null && form.validate()) {
@@ -154,4 +214,87 @@ bool kValidateAndSave(GlobalKey<FormState> globalKey) {
     return true;
   }
   return false;
+}
+
+void showMessageDialog(
+  BuildContext context,
+  String title,
+  Widget content,
+  String buttonText,
+  Function onPressed,
+) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return WillPopScope(
+        onWillPop: () async => false,
+        child: AlertDialog(
+          title: kText(text: title),
+          content: content,
+          actions: [
+            kTextButton(
+              text: buttonText,
+              onPressed: () {
+                return onPressed();
+              },
+            ),
+          ],
+        ),
+      );
+    },
+  );
+}
+
+// TODO: test
+void showConfirmationDialog(
+  BuildContext context,
+  String title,
+  Widget? content,
+  String buttonText1,
+  Function onPressed1,
+  String buttonText2,
+  Function onPressed2,
+) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return WillPopScope(
+        onWillPop: () async => false,
+        child: AlertDialog(
+          title: kText(text: title),
+          content: content,
+          actions: [
+            new TextButton(
+              onPressed: () {
+                return onPressed1();
+              },
+              child: kText(text: buttonText1),
+            ),
+            new TextButton(
+              onPressed: () {
+                return onPressed2();
+              },
+              child: kText(text: buttonText2),
+            )
+          ],
+        ),
+      );
+    },
+  );
+}
+
+void showSnackBar(
+  BuildContext context, {
+  required String text,
+  double fontSize = 18,
+}) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: kText(
+        text: text,
+        fontSize: fontSize,
+        textColor: kWhite,
+      ),
+    ),
+  );
 }
