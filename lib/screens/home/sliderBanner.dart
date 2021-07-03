@@ -34,8 +34,12 @@ class _SliderBannerState extends State<SliderBanner> {
         items: imgList
             .map(
               (item) => Container(
-                child: Center(
-                  child: Image.network(item, fit: BoxFit.cover, width: 1000),
+                margin: const EdgeInsets.symmetric(horizontal: 20.0),
+                decoration: kBoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage(item),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             )

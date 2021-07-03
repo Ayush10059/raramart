@@ -1,5 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.raramart.raramart">
+
+  <uses-permission android:name="android.permission.INTERNET"/> <!-- Add this -->
+
    <application
         android:label="Raramart"
         android:icon="@mipmap/ic_launcher">
@@ -39,3 +42,5 @@
             android:value="2" />
     </application>
 </manifest>
+
+

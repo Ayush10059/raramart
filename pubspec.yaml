@@ -34,4 +34,4 @@ flutter:
   fonts:
     - family: OpenSans
       fonts:
-        - asset: fonts/OpenSans-Regular.ttf
+        - asset: assets/fonts/OpenSans-Regular.ttf
