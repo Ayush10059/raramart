@@ -59,7 +59,6 @@ class Routing {
           return getRouteFor(
             DetailsScreen(
               product: args['product'],
-              price: args['price'],
             ),
           );
         } else

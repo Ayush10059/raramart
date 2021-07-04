@@ -4,6 +4,8 @@ import 'package:raramart/models/products_model.dart';
 
 import 'package:raramart/screens/home/sliderBanner.dart';
 import 'package:raramart/screens/home/searchField.dart';
+import 'package:raramart/widgets/product_grid.dart';
+import 'package:raramart/widgets/product_scroll.dart';
 import 'package:raramart/widgets/widgets.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -22,16 +24,24 @@ class _HomeScreenState extends State<HomeScreen> {
           SearchField(),
           SizedBox(height: 10.0),
           SliderBanner(),
-          productScroll(
-            labelName: "Mobiles, ipads and Tablets",
-            productList: demoProducts,
+          SizedBox(height: 10.0),
+          ProductScroll(
+            labelName: "Homekeeping",
+            categoryId: "102",
             onPressed: () {},
           ),
-          header(
-            text: 'Only for You',
+          SizedBox(height: 10.0),
+          ProductScroll(
+            labelName: "Accessories",
+            categoryId: "25",
             onPressed: () {},
           ),
-          productGrid(productList: demoProducts),
+          SizedBox(height: 10.0),
+          ProductGrid(
+            labelName: "Audio & Video",
+            categoryId: "26",
+            onPressed: () {},
+          )
         ],
       ),
     );

@@ -37,9 +37,9 @@ class _WishListScreenState extends State<WishListScreen> {
               fontWeight: FontWeight.w600,
             ),
           ),
-          productGrid(
-            productList: demoProducts,
-          ),
+          // productGrid(
+          //   productList: demoProducts,
+          // ),
         ],
       ),
     );

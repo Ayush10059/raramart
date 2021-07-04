@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:raramart/models/product_model.dart';
 
 import 'package:share/share.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -12,39 +13,16 @@ import 'package:raramart/utils/custom_stepper.dart';
 import 'package:raramart/widgets/appbar.dart';
 
 class DetailsScreen extends StatefulWidget {
-  final String product;
-  final String price;
+  final Product product;
 
   const DetailsScreen({
     Key? key,
     required this.product,
-    required this.price,
   }) : super(key: key);
 
   @override
   _DetailsScreenState createState() => _DetailsScreenState();
 }
-
-List<Map<String, dynamic>> splashData = [
-  {
-    "key": 0,
-    "title": "Best Deals",
-    "text": "We help people conect with store around United State of America",
-    "image": "assets/images/onboarding.jpg"
-  },
-  {
-    "key": 1,
-    "title": "Get rewards as you eat",
-    "text": "We help people conect with store around United State of America",
-    "image": "assets/images/onboarding.jpg"
-  },
-  {
-    "key": 2,
-    "title": "Share your reviews",
-    "text": "We help people conect with store around United State of America",
-    "image": "assets/images/onboarding.jpg"
-  },
-];
 
 class _DetailsScreenState extends State<DetailsScreen> {
   final SecureStorage secureStorage = SecureStorage();
@@ -88,7 +66,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 child: Row(
                   children: [
                     kText(
-                        text: widget.price,
+                        text: "¥ ${widget.product.price}",
                         fontSize: 18,
                         fontWeight: FontWeight.w600),
                     Spacer(),
@@ -101,8 +79,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     ),
                     IconButton(
                       onPressed: () {
-                        Share.share(
-                            "https://bizzsansar.com/wp-json/wc/v3/products/{widget.product.id}");
+                        Share.share("${widget.product.permalink}");
                       },
                       icon: Icon(
                         Icons.share,
@@ -115,7 +92,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
               Padding(
                 padding: kPadding,
                 child: kText(
-                  text: widget.product,
+                  text: widget.product.name.toString(),
                   fontSize: 16,
                   maxLines: 3,
                   overflow: TextOverflow.visible,
@@ -204,8 +181,9 @@ class _DetailsScreenState extends State<DetailsScreen> {
     );
   }
 
+// TODO: test
   Widget _productImages(BuildContext context) {
-    return SizedBox(
+    return Container(
       height: 250,
       child: Stack(
         children: [
@@ -213,15 +191,17 @@ class _DetailsScreenState extends State<DetailsScreen> {
             alignment: Alignment.center,
             child: CarouselSlider.builder(
               carouselController: _carouselController,
-              itemCount: 5,
+              itemCount: widget.product.images?.length ?? 0,
               itemBuilder: (context, index, realIndex) {
                 return Container(
-                    // height: AppTheme.fullHeight(context) * 0.3,
-                    // child: Image.network(
-                    //   widget.product.images[index].src,
-                    //   fit: BoxFit.cover,
-                    // ),
-                    );
+                  decoration: kBoxDecoration(
+                    borderRadius: 0.0,
+                    image: DecorationImage(
+                      image:
+                          NetworkImage(widget.product.images?[index].src ?? ''),
+                    ),
+                  ),
+                );
               },
               options: CarouselOptions(
                 autoPlay: false,
