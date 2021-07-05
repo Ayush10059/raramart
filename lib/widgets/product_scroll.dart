@@ -46,7 +46,7 @@ class _ProductScrollState extends State<ProductScroll>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          header(
+          buildHeader(
             text: widget.labelName,
             onPressed: () {
               return widget.onPressed();

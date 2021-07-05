@@ -6,7 +6,10 @@ import 'package:raramart/router.dart';
 import 'package:raramart/utils/constants.dart';
 import 'package:raramart/utils/helper.dart';
 
-Widget header({
+import 'package:flutter/material.dart';
+import 'package:raramart/utils/constants.dart';
+
+Widget buildHeader({
   required String text,
   required Function onPressed,
 }) {
