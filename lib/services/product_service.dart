@@ -43,7 +43,7 @@ class ProductService {
       }
 
       if (productsIDs != null) {
-        parameter += "&include=${productsIDs.join(",").toString()}";
+        parameter += "?include=${productsIDs.join(",").toString()}";
       }
 
       if (sortBy != null) {
@@ -54,6 +54,8 @@ class ProductService {
         parameter += "&order=$sortOrder";
       }
       String url = Config.url + Config.productUrl + parameter.toString();
+
+      print(productsIDs);
 
       var response = await Dio().get(
         getOAuthURL("GET", url),

@@ -46,11 +46,13 @@ TextFormField kTextField(
   BuildContext context, {
   required Function onChanged,
   required Function onValidate,
-  required String labelText,
   required String hintText,
+  String? labelText,
   String? helperText,
   bool obscureText = false,
+  Icon? prefixIcon,
   IconButton? suffixIcon,
+  double borderRadius = 4.0,
 }) {
   return TextFormField(
     decoration: kFieldDecoration(
@@ -58,7 +60,9 @@ TextFormField kTextField(
       labelText: labelText,
       hintText: hintText,
       helperText: helperText,
+      prefixIcon: prefixIcon,
       suffixIcon: suffixIcon,
+      borderRadius: borderRadius,
     ),
     maxLengthEnforcement: MaxLengthEnforcement.enforced,
     obscureText: obscureText,
@@ -75,9 +79,11 @@ TextFormField kTextField(
 InputDecoration kFieldDecoration(
   BuildContext context, {
   required String hintText,
-  required String labelText,
+  String? labelText,
   String? helperText,
+  Icon? prefixIcon,
   IconButton? suffixIcon,
+  double borderRadius = 4.0,
 }) {
   return InputDecoration(
     isDense: true,
@@ -85,30 +91,35 @@ InputDecoration kFieldDecoration(
     labelStyle: kTextStyle(textColor: kDarkGrey),
     hintText: hintText,
     helperText: helperText,
+    prefixIcon: prefixIcon,
     suffixIcon: suffixIcon,
     enabledBorder: OutlineInputBorder(
       borderSide: BorderSide(
         color: kLightGrey,
         width: 1.0,
       ),
+      borderRadius: BorderRadius.circular(borderRadius),
     ),
     focusedBorder: OutlineInputBorder(
       borderSide: BorderSide(
         color: kPrimaryColor,
         width: 1.0,
       ),
+      borderRadius: BorderRadius.circular(borderRadius),
     ),
     focusedErrorBorder: OutlineInputBorder(
       borderSide: BorderSide(
         color: kPrimaryColor,
         width: 1.0,
       ),
+      borderRadius: BorderRadius.circular(borderRadius),
     ),
     errorBorder: OutlineInputBorder(
       borderSide: BorderSide(
         color: kPrimaryColor,
         width: 1.0,
       ),
+      borderRadius: BorderRadius.circular(borderRadius),
     ),
   );
 }

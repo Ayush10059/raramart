@@ -17,6 +17,8 @@ dependencies:
 
   flutter_secure_storage: ^4.2.0
 
+  flutter_html: ^2.1.0
+
   carousel_slider: ^4.0.0
   share: ^2.0.4
 

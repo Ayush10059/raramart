@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:raramart/utils/constants.dart';
+import 'package:raramart/utils/helper.dart';
 
 class SearchField extends StatefulWidget {
   const SearchField({Key? key}) : super(key: key);
@@ -12,25 +13,17 @@ class _SearchFieldState extends State<SearchField> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      child: Row(
-        children: [
-          Container(
-            width: 350,
-            height: 45,
-            decoration: BoxDecoration(
-                border: Border.all(color: Color(0xFF979797).withOpacity(0.5)),
-                color: kWhite,
-                borderRadius: BorderRadius.circular(20)),
-            child: TextField(
-              decoration: InputDecoration(
-                  enabledBorder: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                  prefixIcon: Icon(Icons.search),
-                  contentPadding: EdgeInsets.all(10)),
-            ),
-          )
-        ],
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      child: kTextField(
+        context,
+        onChanged: () {},
+        onValidate: () {},
+        hintText: "Search",
+        prefixIcon: Icon(
+          Icons.search,
+          color: kDarkGrey.withOpacity(0.5),
+        ),
+        borderRadius: 20.0,
       ),
     );
   }

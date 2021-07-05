@@ -10,11 +10,9 @@ class Config {
   static String url = "https://store.raramart.com/wp-json/wc/v3/";
   static String tokenUrl =
       "https://store.raramart.com/wp-json/jwt-auth/v1/token";
-  static String costomerUrl = "customers";
   static String productUrl = "products";
   static String categoriesUrl = "products/categories";
   static String ordersUrl = "orders";
-  static String cartUrl = "https://bizzsansar.com/wp-json/wc/store/cart/items";
 }
 
 /// This Generates a valid OAuth 1.0 URL
@@ -59,11 +57,6 @@ String getOAuthURL(String requestMethod, String queryUrl) {
   Map<dynamic, dynamic> params = Uri.splitQueryString(parameters);
   Map<dynamic, dynamic> treeMap = new SplayTreeMap<dynamic, dynamic>();
   treeMap.addAll(params);
-
-  print('params');
-  print(params);
-  print('treeMap');
-  print(treeMap);
 
   String parameterString = "";
 

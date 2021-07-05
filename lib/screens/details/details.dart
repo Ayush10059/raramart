@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:raramart/models/product_model.dart';
+import 'package:raramart/screens/details/related_products_widget.dart';
+import 'package:raramart/widgets/product_scroll.dart';
 
 import 'package:share/share.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -134,10 +136,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   },
                 ),
               ),
-              // productDetailsScroll(
-              //   labelName: "You may also like",
-              //   productList: splashData[0],
-              // ),
+              RelatedProducts(
+                labelName: "Related Products",
+                productsIDs: widget.product.relatedIds ?? [],
+              ),
             ],
           ),
         ),

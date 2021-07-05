@@ -19,30 +19,35 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(
-        children: [
-          SearchField(),
-          SizedBox(height: 10.0),
-          SliderBanner(),
-          SizedBox(height: 10.0),
-          ProductScroll(
-            labelName: "Homekeeping",
-            categoryId: "102",
-            onPressed: () {},
-          ),
-          SizedBox(height: 10.0),
-          ProductScroll(
-            labelName: "Accessories",
-            categoryId: "25",
-            onPressed: () {},
-          ),
-          SizedBox(height: 10.0),
-          ProductGrid(
-            labelName: "Audio & Video",
-            categoryId: "26",
-            onPressed: () {},
-          )
-        ],
+      child: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        child: Column(
+          children: [
+            SearchField(),
+            SizedBox(height: 10.0),
+            SliderBanner(),
+            SizedBox(height: 10.0),
+            ProductScroll(
+              labelName: "Homekeeping",
+              categoryId: "102",
+              onPressed: () {},
+            ),
+            SizedBox(height: 10.0),
+            ProductScroll(
+              labelName: "Accessories",
+              categoryId: "25",
+              onPressed: () {},
+            ),
+            SizedBox(height: 10.0),
+            ProductGrid(
+              labelName: "Audio & Video",
+              categoryId: "26",
+              onPressed: () {},
+            )
+          ],
+        ),
       ),
     );
   }
