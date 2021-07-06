@@ -33,7 +33,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
-      appBar: buildAppBar(context),
+      appBar: buildDashboardAppBar(context),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _page,
         onTap: (index) {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:raramart/utils/size_config.dart';
 import 'package:raramart/widgets/appbar.dart';
 
 import 'package:shimmer/shimmer.dart';
@@ -68,16 +69,14 @@ class _MoreScreenState extends State<MoreScreen> {
             return buildGrid(model.data);
           case ConnectionState.waiting:
             return Container(
-              height: 170,
-              alignment: Alignment.centerLeft,
               child: Shimmer.fromColors(
-                  child: buildGrid(model.data),
-                  baseColor: kWhite,
-                  highlightColor: kLightGrey),
+                child: buildGrid(model.data),
+                baseColor: kWhite,
+                highlightColor: kLightGrey,
+              ),
             );
           default:
             return Container(
-              height: 170,
               alignment: Alignment.centerLeft,
               child: Center(
                 child: kText(

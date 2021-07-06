@@ -1,97 +1,107 @@
 import 'package:flutter/material.dart';
-import 'package:raramart/utils/size_config.dart';
+import 'package:raramart/router.dart';
+import 'package:raramart/utils/constants.dart';
 
-class CategoryWidget extends StatefulWidget {
-  const CategoryWidget({Key? key}) : super(key: key);
+import 'package:raramart/utils/helper.dart';
 
-  @override
-  _CategoryWidgetState createState() => _CategoryWidgetState();
-}
-
-class _CategoryWidgetState extends State<CategoryWidget> {
-  @override
-  Widget build(BuildContext context) {
-    List<Map<String, dynamic>> categoryicons = [
-      {"icon": "assets/images/ICONS_Electronics.png", "text": "Electronics"},
-      {
-        "icon": "assets/images/ICONS_Home Appliances.png",
-        "text": "Home Appliances",
-      },
-      {
-        "icon": "assets/images/ICONS_Womens Fashion.png",
-        "text": "Womens Fashion"
-      },
-      {
-        "icon": "assets/images/ICONS_Beauty and healths.png",
-        "text": "Beauty and Health"
-      },
-    ];
-    return SingleChildScrollView(
+Widget categoryCircleImage(BuildContext context) {
+  List<Map<String, dynamic>> categoryicons = [
+    {
+      "icon": "assets/images/electronics.png",
+      "text": "Electronics",
+      "categoryId": "26",
+    },
+    {
+      "icon": "assets/images/home-appliances.png",
+      "text": "Home Keeping",
+      "categoryId": "102",
+    },
+    {
+      "icon": "assets/images/womens.png",
+      "text": "Women's Fashion",
+      "categoryId": '71',
+    },
+    {
+      "icon": "assets/images/mens.png",
+      "text": "Men's Fashion",
+      "categoryId": "62",
+    },
+    {
+      "icon": "assets/images/groceries.png",
+      "text": "Groceries",
+      "categoryId": '71',
+    },
+    {
+      "icon": "assets/images/sports.png",
+      "text": "Sports",
+      "categoryId": '71',
+    },
+    {
+      "icon": "assets/images/beauty.png",
+      "text": "Beauty and Health",
+      "categoryId": '71',
+    },
+  ];
+  return Container(
+    height: 100,
+    child: ListView.builder(
+      padding: kPadding,
       scrollDirection: Axis.horizontal,
-      child: Padding(
-        padding: EdgeInsets.all(15),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            ...List.generate(
-              categoryicons.length,
-              (index) => CategoryCard(
-                icon: categoryicons[index]["icon"],
-                text: categoryicons[index]["text"],
-                press: () {},
-              ),
-            )
-          ],
-        ),
+      itemCount: categoryicons.length,
+      itemBuilder: (context, index) => buildCategoryCard(
+        context,
+        category: categoryicons[index],
       ),
-    );
-  }
+    ),
+  );
 }
 
-class CategoryCard extends StatelessWidget {
-  const CategoryCard({
-    Key? key,
-    required this.icon,
-    required this.text,
-    required this.press,
-  }) : super(key: key);
-
-  final String icon, text;
-  final GestureTapCallback press;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: press,
+buildCategoryCard(
+  BuildContext context, {
+  required category,
+}) {
+  return Container(
+    padding: const EdgeInsets.symmetric(horizontal: 5.0),
+    child: GestureDetector(
+      onTap: () {
+        print('object');
+        Navigator.pushNamed(
+          context,
+          more,
+          arguments: {
+            "labelName": category['text'],
+            "categoryId": category['categoryId'],
+          },
+        );
+      },
       child: Column(
         children: [
           Container(
-            padding: EdgeInsets.all(getProportionateScreenWidth(15)),
-            height: getProportionateScreenWidth(60),
-            width: getProportionateScreenWidth(60),
-            decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.amber[50],
-                image: DecorationImage(
-                  image: AssetImage(icon),
-                )),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: Text(
-              text,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.black54),
+            height: 60,
+            width: 60,
+            decoration: kBoxDecoration(
+              color: kAmber.withOpacity(0.5),
+              shape: BoxShape.circle,
+              image: DecorationImage(
+                image: AssetImage(category['icon']),
+                fit: BoxFit.cover,
+              ),
             ),
-          )
+          ),
+          SizedBox(height: 5.0),
+          Container(
+            height: 20,
+            width: 60,
+            child: kText(
+              text: category['text'],
+              fontSize: 10,
+              fontWeight: FontWeight.w600,
+              textAlign: TextAlign.center,
+              maxLines: 2,
+            ),
+          ),
         ],
       ),
-    );
-  }
+    ),
+  );
 }

@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 // Colors that we use in our app
 const Color kPrimaryColor = Color(0xFFf16f24);
 
+const Color kAmber = Colors.amber;
+
 const Color kYellow = Colors.yellow;
 const Color kRed = Colors.red;
 

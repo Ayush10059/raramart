@@ -27,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(height: 15.0),
             SearchField(),
             SizedBox(height: 10.0),
-            CategoryWidget(),
+            categoryCircleImage(context),
             SizedBox(height: 10.0),
             SliderBanner(),
             SizedBox(height: 10.0),

@@ -50,73 +50,74 @@ class _CartScreenState extends State<CartScreen> {
       body: ListView.separated(
         itemCount: 2,
         itemBuilder: (context, index) {
-          return Dismissible(
-            key: UniqueKey(),
-            onDismissed: (direction) {
-              // order.removeSingleProduct(index);
-            },
-            confirmDismiss: (DismissDirection dismissDirection) async {
-              // return await showConfirmationDialog(
-              //         context, "remove this item") ==
-              //     true;
-            },
-            background: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              color: kRed,
-              alignment: Alignment.centerLeft,
-              child: Icon(
-                Icons.cancel,
-                color: kWhite,
-              ),
-            ),
-            secondaryBackground: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              color: kRed,
-              alignment: Alignment.centerRight,
-              child: Icon(
-                Icons.cancel,
-                color: kWhite,
-              ),
-            ),
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        kText(
-                          text: "Iphone 12",
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          maxLines: 3,
-                          overflow: TextOverflow.fade,
-                        ),
-                        kText(
-                          text: "¥ $_price x $_quantity",
-                          fontSize: 16,
-                          overflow: TextOverflow.fade,
-                          maxLines: 1,
-                        ),
-                      ],
+          return Container(
+            height: 80,
+            width: 80,
+            margin: const EdgeInsets.all(10.0),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  height: 60,
+                  width: 60,
+                  decoration: kBoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage("assets/images/3.jpg"),
+                      fit: BoxFit.cover,
                     ),
                   ),
-                  CustomStepper(
-                    lowerLimit: 1,
-                    upperLimit: 20,
-                    stepValue: 1,
-                    value: _quantity,
-                    onChanged: (value) {
-                      setState(() => _quantity = value);
-                    },
+                ),
+                SizedBox(
+                  width: 10.0,
+                ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      kText(
+                        text: "Iphone 12",
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        maxLines: 3,
+                        overflow: TextOverflow.fade,
+                      ),
+                      SizedBox(
+                        height: 5.0,
+                      ),
+                      kText(
+                        text: "¥ $_price x $_quantity",
+                        fontSize: 16,
+                        overflow: TextOverflow.fade,
+                        maxLines: 1,
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    kIconButton(
+                      icon: Icons.delete_outline_rounded,
+                      size: 22,
+                      onPressed: () {},
+                    ),
+                    SizedBox(
+                      height: 5.0,
+                    ),
+                    CustomStepper(
+                      lowerLimit: 1,
+                      upperLimit: 20,
+                      stepValue: 1,
+                      value: _quantity,
+                      onChanged: (value) {
+                        setState(() => _quantity = value);
+                      },
+                    ),
+                  ],
+                ),
+              ],
             ),
           );
         },

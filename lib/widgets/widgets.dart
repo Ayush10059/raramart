@@ -3,6 +3,7 @@ import 'package:raramart/models/product_model.dart';
 
 import 'package:raramart/utils/constants.dart';
 import 'package:raramart/utils/helper.dart';
+import 'package:raramart/utils/size_config.dart';
 import 'package:raramart/widgets/product_card.dart';
 
 Widget buildHeader({
@@ -39,8 +40,9 @@ Widget buildHeader({
 
 Widget buildList(List<Product>? productList) {
   return (productList == null)
-      ? kText(
-          text: "Please Check your Internet Connection",
+      ? Container(
+          height: 170,
+          decoration: kBoxDecoration(),
         )
       : Container(
           height: 170,
@@ -60,8 +62,9 @@ Widget buildList(List<Product>? productList) {
 
 Widget buildGrid(List<Product>? productList) {
   return (productList == null)
-      ? kText(
-          text: "Please Check your Internet Connection",
+      ? Container(
+          height: getProportionateScreenHeight(812),
+          decoration: kBoxDecoration(),
         )
       : GridView.builder(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
