@@ -41,7 +41,7 @@ class _RelatedProductsState extends State<RelatedProducts> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          header(text: "You may also like", onPressed: () {}),
+          buildHeader(text: "You may also like", onPressed: () {}),
           _productList(),
         ],
       ),
