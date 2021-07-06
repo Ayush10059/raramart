@@ -35,7 +35,11 @@ flutter:
     - assets/images/raramart-logo.png
     - assets/images/1.jpg
     - assets/images/2.jpg
-    - assets/images/3.jpg
+    - assets/images/ICONS_Electronics.png
+    - assets/images/ICONS_Home Appliances.png
+    - assets/images/ICONS_Womens Fashion.png
+    - assets/images/ICONS_Beauty and healths.png
+    - assets/images/rara japan logo-02.png
 
   fonts:
     - family: OpenSans

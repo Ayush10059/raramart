@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:raramart/router.dart';
 import 'package:raramart/utils/constants.dart';
+import 'package:raramart/utils/helper.dart';
 import 'package:raramart/utils/size_config.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -33,8 +34,13 @@ class _SplashScreenState extends State<SplashScreen> {
       backgroundColor: kWhite,
       body: Center(
         child: Container(
-          color: kWhite,
-          child: Image.asset("assets/images/raramart-logo.png"),
+          width: getProportionateScreenWidth(300),
+          decoration: kBoxDecoration(
+            borderRadius: 0.0,
+            image: DecorationImage(
+              image: AssetImage('assets/images/rara japan logo-02.png'),
+            ),
+          ),
         ),
       ),
     );
