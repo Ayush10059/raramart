@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:raramart/utils/constants.dart';
 import 'package:raramart/utils/helper.dart';
+import 'package:raramart/utils/size_config.dart';
 
 AppBar buildDashboardAppBar(
   BuildContext context,

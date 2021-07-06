@@ -3,6 +3,7 @@ import 'package:raramart/router.dart';
 
 import 'package:raramart/screens/home/sliderBanner.dart';
 import 'package:raramart/screens/home/searchField.dart';
+import 'package:raramart/widgets/category_widget.dart';
 import 'package:raramart/widgets/product_grid.dart';
 import 'package:raramart/widgets/product_scroll.dart';
 
@@ -23,7 +24,10 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         child: Column(
           children: [
+            SizedBox(height: 15.0),
             SearchField(),
+            SizedBox(height: 10.0),
+            CategoryWidget(),
             SizedBox(height: 10.0),
             SliderBanner(),
             SizedBox(height: 10.0),
