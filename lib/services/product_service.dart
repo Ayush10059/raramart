@@ -55,8 +55,7 @@ class ProductService {
       }
       String url = Config.url + Config.productUrl + parameter.toString();
 
-      print(productsIDs);
-
+      print(getOAuthURL("GET", url));
       var response = await Dio().get(
         getOAuthURL("GET", url),
         options: new Options(
@@ -66,8 +65,6 @@ class ProductService {
         ),
       );
 
-      print(response.data);
-
       if (response.statusCode == 200) {
         data = (response.data as List)
             .map(
@@ -76,8 +73,24 @@ class ProductService {
             .toList();
       }
     } on DioError catch (e) {
-      print(e.message);
+      if (e.type == DioErrorType.connectTimeout) {
+        throw Failure(
+          code: 1,
+          message: "Connection Timeout Exception",
+        );
+      }
+      if (e.type == DioErrorType.response) {
+        throw Failure(
+          code: e.response!.statusCode ?? 2,
+          message: e.response!.statusMessage ?? "error",
+        );
+      }
+      throw Failure(
+        code: 0,
+        message: "There was an error, please check your connection",
+      );
     }
+
     return data;
   }
 }

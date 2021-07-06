@@ -6,7 +6,7 @@ import 'package:raramart/utils/size_config.dart';
 
 Text kText({
   required String text,
-  String fontFamily = 'Roboto',
+  String fontFamily = 'ProximaNova',
   Color textColor = kBlack,
   double fontSize = 14,
   FontWeight fontWeight = FontWeight.normal,
@@ -29,7 +29,7 @@ Text kText({
 }
 
 TextStyle kTextStyle({
-  String fontFamily = 'OpenSans',
+  String fontFamily = 'ProximaNova',
   Color textColor = kBlack,
   double fontSize = 14,
   FontWeight fontWeight = FontWeight.normal,

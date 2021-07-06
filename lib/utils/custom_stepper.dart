@@ -25,8 +25,8 @@ class _CustomStepperState extends State<CustomStepper> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 50,
-      width: 150,
+      height: 30,
+      width: 90,
       decoration: BoxDecoration(
         color: kDarkGrey.withOpacity(0.5),
         borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -34,24 +34,28 @@ class _CustomStepperState extends State<CustomStepper> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          IconButton(
-              icon: Icon(
-                Icons.remove,
-                size: 22,
-                color: kWhite,
-              ),
-              onPressed: () {
-                setState(() {
-                  widget.value = (widget.value == widget.lowerLimit)
-                      ? widget.lowerLimit
-                      : widget.value -= widget.stepValue;
-
-                  this.widget.onChanged(widget.value);
-                });
-              }),
           Container(
-            height: 50,
-            width: 50,
+            height: 30,
+            width: 30,
+            child: IconButton(
+                icon: Icon(
+                  Icons.remove,
+                  size: 15,
+                  color: kWhite,
+                ),
+                onPressed: () {
+                  setState(() {
+                    widget.value = (widget.value == widget.lowerLimit)
+                        ? widget.lowerLimit
+                        : widget.value -= widget.stepValue;
+
+                    this.widget.onChanged(widget.value);
+                  });
+                }),
+          ),
+          Container(
+            height: 30,
+            width: 30,
             color: kWhite,
             child: Center(
               child: kText(
@@ -61,21 +65,25 @@ class _CustomStepperState extends State<CustomStepper> {
               ),
             ),
           ),
-          IconButton(
-            icon: Icon(
-              Icons.add,
-              size: 22,
-              color: kWhite,
-            ),
-            onPressed: () {
-              setState(() {
-                widget.value = (widget.value == widget.upperLimit)
-                    ? widget.upperLimit
-                    : widget.value += widget.stepValue;
+          Container(
+            height: 30,
+            width: 30,
+            child: IconButton(
+              icon: Icon(
+                Icons.add,
+                size: 15,
+                color: kWhite,
+              ),
+              onPressed: () {
+                setState(() {
+                  widget.value = (widget.value == widget.upperLimit)
+                      ? widget.upperLimit
+                      : widget.value += widget.stepValue;
 
-                this.widget.onChanged(widget.value);
-              });
-            },
+                  this.widget.onChanged(widget.value);
+                });
+              },
+            ),
           ),
         ],
       ),

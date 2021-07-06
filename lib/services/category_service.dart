@@ -1,9 +1,4 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:dio/dio.dart';
-
-import 'package:raramart/services/config.dart';
 
 import 'package:raramart/models/category_model.dart';
 

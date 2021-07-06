@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:raramart/router.dart';
-import 'package:raramart/screens/dashboard.dart';
-import 'package:raramart/screens/splash.dart';
+
 import 'package:raramart/utils/constants.dart';
+
+import 'package:raramart/screens/splash.dart';
 
 void main() {
   runApp(MyApp());

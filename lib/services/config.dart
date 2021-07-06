@@ -15,6 +15,20 @@ class Config {
   static String ordersUrl = "orders";
 }
 
+// error codes
+// 0 : no connection
+// 1 : timeout error
+// 2 : response error
+
+class Failure {
+  int code;
+  String message;
+  Failure({
+    required this.code,
+    required this.message,
+  });
+}
+
 /// This Generates a valid OAuth 1.0 URL
 ///
 /// if [isHttps] is true we just return the URL with

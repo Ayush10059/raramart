@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 
 import 'package:raramart/models/product_model.dart';
 import 'package:raramart/services/product_service.dart';
+import 'package:raramart/utils/constants.dart';
 
 import 'package:raramart/utils/helper.dart';
 import 'package:raramart/widgets/product_card.dart';
 import 'package:raramart/widgets/widgets.dart';
+import 'package:shimmer/shimmer.dart';
 
 class ProductScroll extends StatefulWidget {
   final String labelName;
@@ -64,13 +66,15 @@ class _ProductScrollState extends State<ProductScroll>
       builder: (BuildContext context, AsyncSnapshot<List<Product>> model) {
         switch (model.connectionState) {
           case ConnectionState.done:
-            return _buildList(model.data);
+            return buildList(model.data);
           case ConnectionState.waiting:
             return Container(
               height: 170,
-              alignment: Alignment.centerLeft,
-              child: Center(
-                child: CircularProgressIndicator(),
+              width: double.infinity,
+              child: Shimmer.fromColors(
+                child: Container(child: buildList(model.data)),
+                baseColor: kWhite,
+                highlightColor: kLightGrey,
               ),
             );
           default:
@@ -80,31 +84,5 @@ class _ProductScrollState extends State<ProductScroll>
         }
       },
     );
-  }
-
-  Widget _buildList(List<Product>? productList) {
-    return (productList == null)
-        ? kText(
-            text: "Please Check your Internet Connection",
-          )
-        : Container(
-            height: 170,
-            child: ListView.builder(
-              padding: EdgeInsets.symmetric(horizontal: 20.0),
-              itemCount: productList.length,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 2.5),
-                  child: ProductCard(product: productList[index]),
-                );
-              },
-            ),
-          );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 }

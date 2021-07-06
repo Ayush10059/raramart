@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:raramart/utils/constants.dart';
 import 'package:raramart/utils/helper.dart';
 
-import 'package:raramart/widgets/widgets.dart';
-
-import 'package:raramart/models/products_model.dart';
-
 class WishListScreen extends StatefulWidget {
   const WishListScreen({Key? key}) : super(key: key);
 

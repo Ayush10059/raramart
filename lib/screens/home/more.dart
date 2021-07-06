@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:raramart/widgets/appbar.dart';
 
 import 'package:shimmer/shimmer.dart';
 
@@ -7,30 +8,23 @@ import 'package:raramart/services/product_service.dart';
 import 'package:raramart/utils/constants.dart';
 
 import 'package:raramart/utils/helper.dart';
-import 'package:raramart/widgets/product_card.dart';
 import 'package:raramart/widgets/widgets.dart';
 
-class ProductGrid extends StatefulWidget {
+class MoreScreen extends StatefulWidget {
   final String labelName;
   final String categoryId;
-  final Function onPressed;
 
-  const ProductGrid({
+  const MoreScreen({
     Key? key,
     required this.labelName,
     required this.categoryId,
-    required this.onPressed,
   }) : super(key: key);
 
   @override
-  _ProductGridState createState() => _ProductGridState();
+  _MoreScreenState createState() => _MoreScreenState();
 }
 
-class _ProductGridState extends State<ProductGrid>
-    with AutomaticKeepAliveClientMixin<ProductGrid> {
-  @override
-  bool get wantKeepAlive => true;
-
+class _MoreScreenState extends State<MoreScreen> {
   ProductService productService = ProductService();
 
   @override
@@ -42,20 +36,23 @@ class _ProductGridState extends State<ProductGrid>
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
-    return Container(
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          buildHeader(
-            text: widget.labelName,
-            onPressed: () {
-              return widget.onPressed();
-            },
-          ),
-          _productList(),
-        ],
+    return Scaffold(
+      appBar: buildAppBar(context),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: kPadding,
+              child: kText(
+                text: widget.labelName,
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            _productList(),
+          ],
+        ),
       ),
     );
   }

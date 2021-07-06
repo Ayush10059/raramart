@@ -1,13 +1,14 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:raramart/widgets/product_card.dart';
 
-import 'package:raramart/utils/constants.dart';
+import 'package:shimmer/shimmer.dart';
 
 import 'package:raramart/models/product_model.dart';
 import 'package:raramart/services/product_service.dart';
+
+import 'package:raramart/utils/constants.dart';
 import 'package:raramart/utils/helper.dart';
 
-import 'package:raramart/widgets/product_card.dart';
 import 'package:raramart/widgets/widgets.dart';
 
 class RelatedProducts extends StatefulWidget {
@@ -31,6 +32,8 @@ class _RelatedProductsState extends State<RelatedProducts> {
   void initState() {
     productService = new ProductService();
 
+    print(widget.productsIDs);
+
     super.initState();
   }
 
@@ -41,7 +44,7 @@ class _RelatedProductsState extends State<RelatedProducts> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          header(text: "You may also like", onPressed: () {}),
+          buildHeader(text: "You may also like", onPressed: () {}),
           _productList(),
         ],
       ),
@@ -59,8 +62,12 @@ class _RelatedProductsState extends State<RelatedProducts> {
             return _buildList(model.data);
           case ConnectionState.waiting:
             return Container(
-              child: Center(
-                child: CircularProgressIndicator(),
+              height: 170,
+              width: double.infinity,
+              child: Shimmer.fromColors(
+                child: Container(child: _buildList(model.data)),
+                baseColor: kWhite,
+                highlightColor: kLightGrey,
               ),
             );
           default:
@@ -77,21 +84,29 @@ class _RelatedProductsState extends State<RelatedProducts> {
   }
 
   Widget _buildList(List<Product>? productList) {
-    return Container(
-      alignment: Alignment.centerLeft,
-      child: ListView.separated(
-        itemCount: productList?.length ?? 0,
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) {
-          dynamic product = productList?[index];
-          return ProductCard(product: product);
-        },
-        separatorBuilder: (BuildContext context, int index) {
-          return SizedBox(
-            width: 0,
+    return (productList == null)
+        ? Container(
+            child: Center(
+              child: kText(
+                text: "Please Check",
+              ),
+            ),
+          )
+        : Container(
+            height: 170,
+            child: ListView.separated(
+              itemCount: productList.length,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, index) {
+                dynamic product = productList[index];
+                return ProductCard(product: product);
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return SizedBox(
+                  width: 0,
+                );
+              },
+            ),
           );
-        },
-      ),
-    );
   }
 }

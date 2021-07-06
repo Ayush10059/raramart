@@ -5,7 +5,7 @@
 
    <application
         android:label="Raramart"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@drawable/raramart_logo">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

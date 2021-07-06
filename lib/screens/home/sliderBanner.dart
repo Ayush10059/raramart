@@ -1,6 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:raramart/utils/constants.dart';
 import 'package:raramart/utils/helper.dart';
 
 final List<String> imgList = [

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:raramart/screens/dashboard.dart';
 import 'package:raramart/screens/details/details.dart';
+import 'package:raramart/screens/home/more.dart';
 
 import 'package:raramart/screens/splash.dart';
 
@@ -19,6 +20,8 @@ const String registerSuccess = '/registerSuccess ';
 const String forgotPassword = '/forgotPassword ';
 
 const String details = '/details';
+
+const String more = '/more';
 
 class Routing {
   static Route<dynamic>? generateRoute(RouteSettings screen) {
@@ -59,6 +62,18 @@ class Routing {
           return getRouteFor(
             DetailsScreen(
               product: args['product'],
+            ),
+          );
+        } else
+          break;
+
+      case more:
+        final args = screen.arguments;
+        if (args is Map) {
+          return getRouteFor(
+            MoreScreen(
+              labelName: args['labelName'],
+              categoryId: args['categoryId'],
             ),
           );
         } else

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:raramart/models/product_model.dart';
-import 'package:raramart/screens/details/related_products_widget.dart';
-import 'package:raramart/widgets/product_scroll.dart';
 
 import 'package:share/share.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+
+import 'package:flutter_html/flutter_html.dart';
 
 import 'package:raramart/utils/constants.dart';
 import 'package:raramart/utils/helper.dart';
@@ -13,6 +12,10 @@ import 'package:raramart/utils/progressHUD.dart';
 import 'package:raramart/utils/custom_stepper.dart';
 
 import 'package:raramart/widgets/appbar.dart';
+
+import 'package:raramart/models/product_model.dart';
+
+import 'package:raramart/screens/details/related_products_widget.dart';
 
 class DetailsScreen extends StatefulWidget {
   final Product product;
@@ -136,6 +139,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   },
                 ),
               ),
+              Description(
+                description: widget.product.description ?? '',
+                shortDescription: widget.product.shortDescription ?? '',
+              ),
               RelatedProducts(
                 labelName: "Related Products",
                 productsIDs: widget.product.relatedIds ?? [],
@@ -183,7 +190,6 @@ class _DetailsScreenState extends State<DetailsScreen> {
     );
   }
 
-// TODO: test
   Widget _productImages(BuildContext context) {
     return Container(
       height: 250,
@@ -235,23 +241,24 @@ class _DetailsScreenState extends State<DetailsScreen> {
               ),
             ),
           ),
-          Positioned.fill(
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Row(
-                  children: List.generate(
-                    3,
-                    (index) => buildDot(
-                      currentIndex: _currentIndex,
-                      index: index,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          )
+          // TODO: dots
+          // Positioned.fill(
+          //   child: Align(
+          //     alignment: Alignment.bottomCenter,
+          //     child: Padding(
+          //       padding: const EdgeInsets.all(20.0),
+          //       child: Row(
+          //         children: List.generate(
+          //           3,
+          //           (index) => buildDot(
+          //             currentIndex: _currentIndex,
+          //             index: index,
+          //           ),
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // )
         ],
       ),
     );
@@ -312,5 +319,44 @@ class StarRating extends StatelessWidget {
     return new Row(
         children:
             new List.generate(starCount, (index) => buildStar(context, index)));
+  }
+}
+
+class Description extends StatefulWidget {
+  final String description;
+  final String shortDescription;
+
+  const Description({
+    Key? key,
+    required this.description,
+    required this.shortDescription,
+  }) : super(key: key);
+
+  @override
+  _DescriptionState createState() => _DescriptionState();
+}
+
+class _DescriptionState extends State<Description> {
+  int _page = 0;
+  late PageController _pageController;
+  @override
+  void initState() {
+    super.initState();
+
+    _pageController = new PageController(
+      initialPage: _page,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: kPadding,
+      decoration: kBoxDecoration(
+        borderRadius: 0.0,
+      ),
+      width: double.infinity,
+      child: Html(data: widget.description),
+    );
   }
 }
