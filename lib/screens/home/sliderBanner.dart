@@ -21,29 +21,27 @@ class SliderBanner extends StatefulWidget {
 class _SliderBannerState extends State<SliderBanner> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: CarouselSlider(
-        options: CarouselOptions(
-          height: 150.0,
-          aspectRatio: 16 / 9,
-          autoPlay: true,
-          autoPlayAnimationDuration: Duration(milliseconds: 800),
-          viewportFraction: 1,
-        ),
-        items: imgList
-            .map(
-              (item) => Container(
-                margin: const EdgeInsets.symmetric(horizontal: 20.0),
-                decoration: kBoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage(item),
-                    fit: BoxFit.cover,
-                  ),
+    return CarouselSlider(
+      options: CarouselOptions(
+        height: 150.0,
+        aspectRatio: 16 / 9,
+        autoPlay: true,
+        autoPlayAnimationDuration: Duration(milliseconds: 800),
+        viewportFraction: 1,
+      ),
+      items: imgList
+          .map(
+            (item) => Container(
+              margin: const EdgeInsets.symmetric(horizontal: 20.0),
+              decoration: kBoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(item),
+                  fit: BoxFit.cover,
                 ),
               ),
-            )
-            .toList(),
-      ),
+            ),
+          )
+          .toList(),
     );
   }
 }

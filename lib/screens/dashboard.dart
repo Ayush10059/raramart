@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:raramart/screens/favorites.dart';
+import 'package:raramart/screens/wishlist.dart';
 
 import 'package:raramart/utils/constants.dart';
 import 'package:raramart/utils/size_config.dart';
@@ -77,7 +77,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         },
         children: [
           HomeScreen(),
-          WishListScreen(),
+          WishlistScreen(),
           CartScreen(),
           LoginScreen(),
         ],

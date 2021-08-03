@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 
+import 'package:provider/provider.dart';
+import 'package:raramart/providers/wishlist_provider.dart';
+
 import 'package:share/share.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 import 'package:flutter_html/flutter_html.dart';
 
+import 'package:raramart/providers/cart_provider.dart';
+
+import 'package:raramart/router.dart';
+
 import 'package:raramart/utils/constants.dart';
 import 'package:raramart/utils/helper.dart';
 import 'package:raramart/utils/storage.dart';
-import 'package:raramart/utils/progressHUD.dart';
 import 'package:raramart/utils/custom_stepper.dart';
 
 import 'package:raramart/widgets/appbar.dart';
@@ -38,7 +44,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
 
   int _currentIndex = 0;
 
-  double _rating = 0.0;
+  double _rating = 0.00;
 
   bool _apiCallProcess = false;
 
@@ -50,141 +56,202 @@ class _DetailsScreenState extends State<DetailsScreen> {
 
     _currentIndex = 0;
 
-    _rating = 0.0;
+    _rating = double.parse(widget.product.averageRating ?? "0.00");
 
     _apiCallProcess = false;
   }
 
   @override
   Widget build(BuildContext context) {
-    return ProgressHUD(
-      inAsyncCall: _apiCallProcess,
-      child: Scaffold(
-        appBar: buildAppBar(context),
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _productImages(context),
-              Padding(
-                padding: kPadding,
-                child: Row(
-                  children: [
-                    kText(
-                        text: "¥ ${widget.product.price}",
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600),
-                    Spacer(),
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.favorite_border,
-                        color: kDarkGrey,
-                      ),
+    return Scaffold(
+      appBar: buildAppBar(context),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _productImages(context),
+            Padding(
+              padding: kPadding,
+              child: Row(
+                children: [
+                  kText(
+                      text: "¥ ${widget.product.price}",
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600),
+                  Spacer(),
+                  IconButton(
+                    onPressed: () {
+                      WishlistNotifier _wishlistNotifier =
+                          Provider.of<WishlistNotifier>(context, listen: false);
+
+                      _wishlistNotifier.setProduct(
+                        product: widget.product,
+                        quantity: _quantity,
+                      );
+                      showSnackBar(context, text: "Added to Wishlist");
+                    },
+                    icon: Icon(
+                      Icons.favorite_border,
+                      color: kDarkGrey,
                     ),
-                    IconButton(
-                      onPressed: () {
-                        Share.share("${widget.product.permalink}");
-                      },
-                      icon: Icon(
-                        Icons.share,
-                        color: kDarkGrey,
-                      ),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      Share.share("${widget.product.permalink}");
+                    },
+                    icon: Icon(
+                      Icons.share,
+                      color: kDarkGrey,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              Padding(
-                padding: kPadding,
-                child: kText(
-                  text: widget.product.name.toString(),
-                  fontSize: 16,
-                  maxLines: 3,
-                  overflow: TextOverflow.visible,
-                ),
+            ),
+            Padding(
+              padding: kPadding,
+              child: kText(
+                text: widget.product.name.toString(),
+                fontSize: 16,
+                maxLines: 3,
+                overflow: TextOverflow.visible,
               ),
-              Padding(
-                padding: kPadding,
-                child: StarRating(
-                  rating: _rating,
-                  onRatingChanged: (rating) {
-                    _rating = rating;
-                  },
-                ),
+            ),
+            Padding(
+              padding: kPadding,
+              child: StarRating(
+                rating: _rating,
+                onRatingChanged: (rating) {
+                  // _rating = rating;
+                },
               ),
-              Padding(
-                padding: kPadding,
-                child: Divider(
-                  height: 2.0,
-                  thickness: 2.0,
-                ),
+            ),
+            Padding(
+              padding: kPadding,
+              child: Divider(
+                height: 2.0,
+                thickness: 2.0,
               ),
-              Padding(
-                padding: kPadding,
-                child: kText(
-                  text: "Select Quantity",
-                  fontSize: 16,
-                  textColor: kDarkGrey.withOpacity(0.6),
-                ),
+            ),
+            Padding(
+              padding: kPadding,
+              child: kText(
+                text: "Select Quantity",
+                fontSize: 16,
+                textColor: kDarkGrey.withOpacity(0.6),
               ),
-              Padding(
-                padding: kPadding,
-                child: CustomStepper(
-                  lowerLimit: 1,
-                  upperLimit: 20,
-                  stepValue: 1,
-                  value: this._quantity,
-                  onChanged: (value) {
-                    this._quantity = value;
-                  },
-                ),
+            ),
+            Padding(
+              padding: kPadding,
+              child: CustomStepper(
+                lowerLimit: 1,
+                upperLimit: 20,
+                stepValue: 1,
+                value: this._quantity,
+                onChanged: (value) {
+                  this._quantity = value;
+                },
               ),
-              Description(
-                description: widget.product.description ?? '',
-                shortDescription: widget.product.shortDescription ?? '',
-              ),
-              RelatedProducts(
-                labelName: "Related Products",
-                productsIDs: widget.product.relatedIds ?? [],
-              ),
-            ],
-          ),
+            ),
+            Description(
+              description: widget.product.description ?? '',
+              shortDescription: widget.product.shortDescription ?? '',
+            ),
+            RelatedProducts(
+              labelName: "Related Products",
+              productsIDs: widget.product.relatedIds ?? [],
+            ),
+          ],
         ),
-        bottomSheet: Container(
-          padding: kPadding,
-          color: kWhite,
-          height: 50,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              kIconButton(
-                icon: Icons.home_outlined,
-                onPressed: () {},
-              ),
-              VerticalDivider(
-                thickness: 1.0,
-                width: 1.0,
-              ),
-              kIconButton(
-                icon: Icons.favorite_border_outlined,
-                onPressed: () {},
-              ),
-              kButton(
-                height: 50,
-                width: 100,
-                text: "Buy Now",
-                bgColor: kPrimaryColor,
-                onPressed: () {},
-              ),
-              kButton(
-                height: 50,
-                width: 100,
-                text: "Add to Cart",
-                bgColor: kYellow,
-                onPressed: () {},
-              ),
-            ],
-          ),
+      ),
+      bottomSheet: Container(
+        padding: kPadding,
+        color: kWhite,
+        height: 60,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            kIconButton(
+              icon: Icons.home_outlined,
+              onPressed: () {
+                Navigator.popUntil(
+                  context,
+                  ModalRoute.withName(Navigator.defaultRouteName),
+                );
+              },
+            ),
+            VerticalDivider(
+              thickness: 1.0,
+              width: 1.0,
+            ),
+            kIconButton(
+              icon: Icons.favorite_border_outlined,
+              onPressed: () {
+                WishlistNotifier _wishlistNotifier =
+                    Provider.of<WishlistNotifier>(context, listen: false);
+
+                _wishlistNotifier.setProduct(
+                  product: widget.product,
+                  quantity: _quantity,
+                );
+                showSnackBar(context, text: "Added to Wishlist");
+              },
+            ),
+            kButton(
+              height: 50,
+              width: 100,
+              text: "Buy Now",
+              bgColor: kPrimaryColor,
+              onPressed: () {
+                showConfirmationDialog(
+                  context,
+                  "Do you want to buy $_quantity item(s)?",
+                  null,
+                  "Yes",
+                  () {
+                    CartNotifier _cartNotifier =
+                        Provider.of<CartNotifier>(context, listen: false);
+
+                    _cartNotifier.setProduct(
+                      product: widget.product,
+                      quantity: _quantity,
+                    );
+                    showSnackBar(context, text: "Added to Cart");
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                  },
+                  "No",
+                  () => Navigator.pop(context),
+                );
+              },
+            ),
+            kButton(
+              height: 50,
+              width: 100,
+              text: "Add to Cart",
+              bgColor: kYellow,
+              onPressed: () {
+                showConfirmationDialog(
+                  context,
+                  "Do you want to add $_quantity item(s) to Cart?",
+                  null,
+                  "Yes",
+                  () {
+                    CartNotifier _cartNotifier =
+                        Provider.of<CartNotifier>(context, listen: false);
+
+                    _cartNotifier.setProduct(
+                      product: widget.product,
+                      quantity: _quantity,
+                    );
+                    showSnackBar(context, text: "Added to Cart");
+                    Navigator.pop(context);
+                  },
+                  "No",
+                  () => Navigator.pop(context),
+                );
+              },
+            ),
+          ],
         ),
       ),
     );

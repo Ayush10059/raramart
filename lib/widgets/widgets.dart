@@ -41,18 +41,18 @@ Widget buildHeader({
 Widget buildList(List<Product>? productList) {
   return (productList == null)
       ? Container(
-          height: 170,
+          height: 180,
           decoration: kBoxDecoration(),
         )
       : Container(
-          height: 170,
+          height: 180,
           child: ListView.builder(
             padding: EdgeInsets.symmetric(horizontal: 20.0),
             itemCount: productList.length,
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
               return Padding(
-                padding: EdgeInsets.symmetric(horizontal: 2.5),
+                padding: EdgeInsets.symmetric(horizontal: 4.0),
                 child: ProductCard(product: productList[index]),
               );
             },
@@ -70,9 +70,9 @@ Widget buildGrid(List<Product>? productList) {
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           shrinkWrap: true,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            childAspectRatio: 1 / 1.5,
+            childAspectRatio: 1 / 1.6,
             crossAxisCount: 3,
-            crossAxisSpacing: 5.0,
+            crossAxisSpacing: 8.0,
           ),
           physics: NeverScrollableScrollPhysics(),
           scrollDirection: Axis.vertical,

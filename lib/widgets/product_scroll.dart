@@ -6,7 +6,6 @@ import 'package:raramart/services/product_service.dart';
 import 'package:raramart/utils/constants.dart';
 
 import 'package:raramart/utils/helper.dart';
-import 'package:raramart/widgets/product_card.dart';
 import 'package:raramart/widgets/widgets.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -69,7 +68,7 @@ class _ProductScrollState extends State<ProductScroll>
             return buildList(model.data);
           case ConnectionState.waiting:
             return Container(
-              height: 170,
+              height: 190,
               width: double.infinity,
               child: Shimmer.fromColors(
                 child: Container(child: buildList(model.data)),

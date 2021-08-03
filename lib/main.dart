@@ -1,12 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:raramart/providers/cart_provider.dart';
+import 'package:raramart/providers/wishlist_provider.dart';
 import 'package:raramart/router.dart';
+import 'package:raramart/screens/cart/cart.dart';
+import 'package:raramart/screens/dashboard.dart';
+import 'package:raramart/screens/wishlist.dart';
 
 import 'package:raramart/utils/constants.dart';
 
 import 'package:raramart/screens/splash.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => CartNotifier(),
+          child: CartScreen(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => WishlistNotifier(),
+          child: WishlistScreen(),
+        ),
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -31,7 +51,8 @@ class MyApp extends StatelessWidget {
         ),
       ),
       onGenerateRoute: Routing.generateRoute,
-      home: SplashScreen(),
+      initialRoute: splash,
+      home: DashboardScreen(),
     );
   }
 }

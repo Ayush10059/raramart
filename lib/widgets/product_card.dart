@@ -37,6 +37,8 @@ class ProductCard extends StatelessWidget {
               ),
             ),
             Container(
+              width: 120,
+              margin: const EdgeInsets.symmetric(vertical: 8.0),
               child: kText(
                 text: product.name ?? '',
                 fontSize: 12,

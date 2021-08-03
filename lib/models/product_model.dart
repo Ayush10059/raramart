@@ -7,6 +7,7 @@ class Product {
   String? price;
   String? regularPrice;
   String? salePrice;
+  String? averageRating;
   List<Images>? images;
   List<Categories>? category;
   List<int>? relatedIds;
@@ -22,6 +23,7 @@ class Product {
     this.salePrice,
     this.images,
     this.category,
+    this.averageRating,
     this.relatedIds,
   });
 
@@ -38,6 +40,8 @@ class Product {
     regularPrice = json['regular_price'];
     salePrice =
         (json['sale_price'] != "") ? json['sale_price'] : json['regular_price'];
+
+    averageRating = json['average_rating'];
 
     relatedIds = json["related_ids"].cast<int>();
 

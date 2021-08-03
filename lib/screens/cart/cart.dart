@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:raramart/providers/cart_provider.dart';
 
 import 'package:raramart/utils/constants.dart';
 import 'package:raramart/utils/helper.dart';
@@ -30,199 +32,218 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // return new Consumer<MakeOrderNotifier>(
-    // builder: (context, order, child) {
-    // if (order.allProducts.length == 0) {
-    //   return Scaffold(
-    //     backgroundColor: Theme.of(context).backgroundColor,
-    //     appBar: buildAppBar(context, title: 'Cart'),
-    //     body: Center(
-    //       child: Text(
-    //         "Please add to order",
-    //         style: Theme.of(context).textTheme.headline4,
-    //         maxLines: 3,
-    //       ),
-    //     ),
-    //   );
-    // } else {
-    // calculateTotal(order.allProducts);
-    return Scaffold(
-      body: ListView.separated(
-        itemCount: 2,
-        itemBuilder: (context, index) {
+    return new Consumer<CartNotifier>(
+      builder: (context, cart, child) {
+        if (cart.allProducts.length == 0) {
           return Container(
-            height: 80,
-            width: 80,
-            margin: const EdgeInsets.all(10.0),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  height: 60,
-                  width: 60,
-                  decoration: kBoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage("assets/images/3.jpg"),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 10.0,
-                ),
-                Expanded(
-                  child: Column(
+            child: Center(
+              child: kText(
+                text: "No items in Cart",
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                textColor: kBlack.withOpacity(0.6),
+                maxLines: 2,
+              ),
+            ),
+          );
+        } else {
+          // calculateTotal(order.allProducts);
+          return Scaffold(
+            body: ListView.separated(
+              itemCount: cart.allProducts.length,
+              itemBuilder: (context, index) {
+                return Container(
+                  height: 80,
+                  width: 80,
+                  margin: const EdgeInsets.all(10.0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      kText(
-                        text: "Iphone 12",
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        maxLines: 3,
-                        overflow: TextOverflow.fade,
+                      Container(
+                        height: 60,
+                        width: 60,
+                        decoration: kBoxDecoration(
+                          image: DecorationImage(
+                            image: NetworkImage(
+                              cart.allProducts[index].product.images?[0].src ??
+                                  '',
+                            ),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                       ),
                       SizedBox(
-                        height: 5.0,
+                        width: 10.0,
                       ),
-                      kText(
-                        text: "¥ $_price x $_quantity",
-                        fontSize: 16,
-                        overflow: TextOverflow.fade,
-                        maxLines: 1,
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            kText(
+                              text: cart.allProducts[index].product.name ?? '',
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              maxLines: 3,
+                              overflow: TextOverflow.fade,
+                            ),
+                            SizedBox(
+                              height: 5.0,
+                            ),
+                            kText(
+                              text:
+                                  "¥ ${cart.allProducts[index].product.price ?? ''} x ${cart.allProducts[index].quantity}",
+                              fontSize: 16,
+                              overflow: TextOverflow.fade,
+                              maxLines: 1,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          kIconButton(
+                            icon: Icons.delete_outline_rounded,
+                            size: 22,
+                            onPressed: () {
+                              showConfirmationDialog(
+                                context,
+                                "Do you want to add $_quantity item(s) to order?",
+                                null,
+                                "Yes",
+                                () {
+                                  cart.removeSingleProduct(index);
+                                  Navigator.pop(context);
+                                },
+                                "No",
+                                () => Navigator.pop(context),
+                              );
+                            },
+                          ),
+                          SizedBox(
+                            height: 5.0,
+                          ),
+                          CustomStepper(
+                            lowerLimit: 1,
+                            upperLimit: 20,
+                            stepValue: 1,
+                            value: cart.allProducts[index].quantity,
+                            onChanged: (value) {
+                              setState(
+                                () => cart.allProducts[index].quantity = value,
+                              );
+                            },
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                );
+              },
+              separatorBuilder: (context, index) {
+                return Divider(
+                  thickness: 1.0,
+                  height: 1.0,
+                );
+              },
+            ),
+            persistentFooterButtons: [
+              SizedBox(
+                width: double.infinity,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    kIconButton(
-                      icon: Icons.delete_outline_rounded,
-                      size: 22,
-                      onPressed: () {},
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        kText(
+                          text: "Sub Total: ¥ ${_price.round() * _quantity}",
+                          fontSize: 14,
+                          overflow: TextOverflow.fade,
+                          maxLines: 1,
+                        ),
+                        kText(
+                          text: "Delivery Charge: ¥ ${_deliveryPrice.round()}",
+                          fontSize: 14,
+                          overflow: TextOverflow.fade,
+                          maxLines: 1,
+                        ),
+                      ],
                     ),
-                    SizedBox(
-                      height: 5.0,
+                    kText(
+                      text:
+                          "Total: ¥ ${(_price.round() * _quantity) + _deliveryPrice.round()}",
+                      fontSize: 14,
+                      overflow: TextOverflow.fade,
+                      maxLines: 1,
                     ),
-                    CustomStepper(
-                      lowerLimit: 1,
-                      upperLimit: 20,
-                      stepValue: 1,
-                      value: _quantity,
-                      onChanged: (value) {
-                        setState(() => _quantity = value);
-                      },
+                    Center(
+                      child: TextButton(
+                        onPressed: () {
+                          showConfirmationDialog(
+                            context,
+                            "Do you want to place an order?",
+                            null,
+                            "Yes",
+                            () {
+                              // _orde¥ervice
+                              //     .makeOrder(
+                              //   _token,
+                              //   _companyId,
+                              //   order.getOrder,
+                              // )
+                              //     .then((value) {
+                              showSnackBar(
+                                context,
+                                text: "Order Placed",
+                              );
+                              // }, onError: (e) {
+                              //   FormHelper.showSnackBar(
+                              //     context,
+                              //     text: "An error Occured",
+                              //   );
+                              // });
+
+                              // MakeOrderNotifier orderNotifier =
+                              //     Provider.of<MakeOrderNotifier>(context,
+                              //         listen: false);
+
+                              // orderNotifier.removeAllProducts();
+
+                              Navigator.pop(context);
+                            },
+                            "No",
+                            () => Navigator.pop(context),
+                          );
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15.0),
+                            color: Theme.of(context).primaryColor,
+                          ),
+                          alignment: Alignment.center,
+                          padding: const EdgeInsets.symmetric(vertical: 12.0),
+                          // width: AppTheme.fullWidth(context) * 0.7,
+                          child: kText(
+                            text: 'Checkout',
+                            textColor: kWhite,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),
-              ],
-            ),
-          );
-        },
-        separatorBuilder: (context, index) {
-          return Divider(
-            thickness: 1.0,
-            height: 1.0,
-          );
-        },
-      ),
-      persistentFooterButtons: [
-        SizedBox(
-          width: double.infinity,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  kText(
-                    text: "Sub Total: ¥ ${_price.round() * _quantity}",
-                    fontSize: 14,
-                    overflow: TextOverflow.fade,
-                    maxLines: 1,
-                  ),
-                  kText(
-                    text: "Delivery Charge: ¥ ${_deliveryPrice.round()}",
-                    fontSize: 14,
-                    overflow: TextOverflow.fade,
-                    maxLines: 1,
-                  ),
-                ],
-              ),
-              kText(
-                text:
-                    "Total: ¥ ${(_price.round() * _quantity) + _deliveryPrice.round()}",
-                fontSize: 14,
-                overflow: TextOverflow.fade,
-                maxLines: 1,
-              ),
-              Center(
-                child: TextButton(
-                  onPressed: () {
-                    showConfirmationDialog(
-                      context,
-                      "Do you want to place an order?",
-                      null,
-                      "Yes",
-                      () {
-                        // _orde¥ervice
-                        //     .makeOrder(
-                        //   _token,
-                        //   _companyId,
-                        //   order.getOrder,
-                        // )
-                        //     .then((value) {
-                        showSnackBar(
-                          context,
-                          text: "Order Placed",
-                        );
-                        // }, onError: (e) {
-                        //   FormHelper.showSnackBar(
-                        //     context,
-                        //     text: "An error Occured",
-                        //   );
-                        // });
-
-                        // MakeOrderNotifier orderNotifier =
-                        //     Provider.of<MakeOrderNotifier>(context,
-                        //         listen: false);
-
-                        // orderNotifier.removeAllProducts();
-
-                        Navigator.pop(context);
-                      },
-                      "No",
-                      () => Navigator.pop(context),
-                    );
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15.0),
-                      color: Theme.of(context).primaryColor,
-                    ),
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.symmetric(vertical: 12.0),
-                    // width: AppTheme.fullWidth(context) * 0.7,
-                    child: kText(
-                      text: 'Checkout',
-                      textColor: kWhite,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
               ),
             ],
-          ),
-        ),
-      ],
+          );
+        }
+      },
     );
-    // }
-    //   },
-    // );
   }
 }
 

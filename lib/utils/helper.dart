@@ -53,6 +53,7 @@ TextFormField kTextField(
   Icon? prefixIcon,
   IconButton? suffixIcon,
   double borderRadius = 4.0,
+  bool autofocus = false,
 }) {
   return TextFormField(
     decoration: kFieldDecoration(
@@ -64,6 +65,7 @@ TextFormField kTextField(
       suffixIcon: suffixIcon,
       borderRadius: borderRadius,
     ),
+    autofocus: autofocus,
     maxLengthEnforcement: MaxLengthEnforcement.enforced,
     obscureText: obscureText,
     keyboardType: TextInputType.text,
@@ -129,6 +131,8 @@ BoxDecoration kBoxDecoration({
   double borderRadius = 4.0,
   BoxShape shape = BoxShape.rectangle,
   DecorationImage? image,
+  Color borderColor = kWhite,
+  double borderWidth = 0.0,
 }) {
   return BoxDecoration(
     color: color,
@@ -137,6 +141,10 @@ BoxDecoration kBoxDecoration({
         : null,
     shape: shape,
     image: image,
+    border: Border.all(
+      color: borderColor,
+      width: borderWidth,
+    ),
   );
 }
 

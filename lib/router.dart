@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:raramart/screens/dashboard.dart';
 import 'package:raramart/screens/details/details.dart';
+import 'package:raramart/screens/details/search.dart';
 import 'package:raramart/screens/home/more.dart';
 
 import 'package:raramart/screens/splash.dart';
@@ -12,6 +13,8 @@ import 'package:raramart/screens/login/forgot_password.dart';
 
 const String splash = '/';
 
+const String home = '/home';
+
 const String dashboard = '/dashboard';
 
 const String login = '/login ';
@@ -22,6 +25,8 @@ const String forgotPassword = '/forgotPassword ';
 const String details = '/details';
 
 const String more = '/more';
+
+const String search = '/search';
 
 class Routing {
   static Route<dynamic>? generateRoute(RouteSettings screen) {
@@ -78,6 +83,11 @@ class Routing {
           );
         } else
           break;
+
+      case search:
+        return getRouteFor(
+          SearchScreen(),
+        );
 
       default:
         return getRouteFor(

@@ -23,7 +23,7 @@ class ProductService {
       String parameter = "";
 
       if (strSearch != null) {
-        parameter += "&search=$strSearch";
+        parameter += "?search=$strSearch";
       }
 
       if (pageSize != null) {

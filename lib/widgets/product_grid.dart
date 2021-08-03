@@ -71,7 +71,7 @@ class _ProductGridState extends State<ProductGrid>
             return buildGrid(model.data);
           case ConnectionState.waiting:
             return Container(
-              height: 170,
+              height: 180,
               alignment: Alignment.centerLeft,
               child: Shimmer.fromColors(
                   child: buildGrid(model.data),
@@ -80,7 +80,7 @@ class _ProductGridState extends State<ProductGrid>
             );
           default:
             return Container(
-              height: 170,
+              height: 180,
               alignment: Alignment.centerLeft,
               child: Center(
                 child: kText(
