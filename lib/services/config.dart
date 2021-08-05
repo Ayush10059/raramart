@@ -5,8 +5,8 @@ import 'dart:math';
 import 'package:crypto/crypto.dart' as crypto;
 
 class Config {
-  static String key = "ck_cabccc6c84370576aefe9e91b06836cae3606e0f";
-  static String secret = "cs_c7eceb6f0cbcaab13581ba8043d41bae62fa6660";
+  static String key = "ck_bc072dcc60ae302c79c957a979a2bd2458a4eea3";
+  static String secret = "cs_540cb3be515498ce7e3014b5c5fffc0e9a404254";
   static String url = "https://store.raramart.com/wp-json/wc/v3/";
   static String tokenUrl =
       "https://store.raramart.com/wp-json/jwt-auth/v1/token";
